@@ -1,8 +1,10 @@
 <script>
+import { wishlist } from '../Wislist/Wishlist'
   export default {
     data(){
       return {
         name: 'Liakos',
+        wishlist,
         search: '',
         books: [
           {title: "book-one", author: "Nesbo", isFav: true, category: 'science'},
@@ -29,16 +31,6 @@
     methods: {
       toggleFav (b){
         b.isFav = !b.isFav
-      },
-      removeFromList(b){
-        this.wishList = this.wishList.filter(book => book != b)
-      },
-      toggleWishList(b){
-        if(this.wishList.includes(b)){
-          this.wishList = this.wishList.filter(book => book != b)
-        }else{
-          this.wishList.push(b)
-        }
       }
     },
     computed: {
@@ -65,16 +57,16 @@
         <h3>{{ book.title }}</h3>
         <h4>{{ book.author }}</h4>
 
-        <span class="wishlistIcon" :class="{wishlistIn: wishList.includes(book)}" @click="toggleWishList(book)" ></span>
+        <span class="wishlistIcon" :class="{wishlistIn: wishlist.wishList.includes(book)}" @click="wishlist.toggleWishList(book)" ></span>
     </div>
 
     <div> I have {{ counter }} Favourite Books</div>
 
     <h3>WishList</h3>
-    <div v-for="book in wishList" class="book-container wishlist-item">
+    <div v-for="book in wishlist.wishList" class="book-container wishlist-item">
         <h3>{{ book.title }}</h3>
         <h4>{{ book.author }}</h4>
-        <button @click="removeFromList(book)">Remove from wishlist</button>
+        <button @click="wishlist.removeFromList(book)">Remove from wishlist</button>
     </div>
   </section>
 </template>
